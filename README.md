@@ -31,8 +31,8 @@ pa04/
 Tested on Windows 11 with Miniconda, CPU only (no GPU needed; evaluation takes a few minutes).
 
 ```
-git clone https://github.com/<your-id>/<repo-name>.git
-cd <repo-name>
+git clone https://github.com/toyct2/EF2039_PA04.git
+cd EF2039_PA04
 conda env create -f environment.yml
 conda activate pa04
 ```
