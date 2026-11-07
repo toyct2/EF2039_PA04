@@ -4,7 +4,7 @@ Step 7. Make the RQ2 table and the sample-image figure for the paper.
 Input:  results/rq2/rq2_results.csv   (from 06_evaluate_rq2.py)
         dataset/test/{normal,defect}/  (from 01_make_split.py)
 Output: results/rq2/table_rq2.tex     LaTeX tabular (use with \\input{} inside a table)
-        results/rq2/fig_samples.pdf   2x2 sample EL images (mono/poly x normal/defect)
+        results/rq2/fig_samples.pdf   1x4 sample EL images (mono/poly x normal/defect)
         results/rq2/fig_samples.png   preview
 
 Usage (run from the pa04 folder, in the conda environment):
@@ -66,21 +66,18 @@ def make_table():
 
 
 def make_sample_figure():
-    plt.rcParams.update({"font.family": "serif", "font.size": 8})
-    fig, axes = plt.subplots(2, 2, figsize=(3.3, 3.5))
+    """One row (fits one column of the 2-page paper): mono normal/defect, poly normal/defect."""
+    plt.rcParams.update({"font.family": "serif", "font.size": 7})
+    fig, axes = plt.subplots(1, 4, figsize=(3.3, 1.05))
 
-    for i, cell_type in enumerate(["Mono", "Poly"]):
-        for j, label in enumerate(["normal", "defect"]):
-            ax = axes[i, j]
-            ax.imshow(imread(TEST_DIR / label / SAMPLES[(cell_type, label)]), cmap="gray")
-            ax.set_xticks([])
-            ax.set_yticks([])
-            if i == 0:
-                ax.set_title(label.capitalize(), fontsize=9)
-            if j == 0:
-                ax.set_ylabel(cell_type, fontsize=9)
+    panels = [("Mono", "normal"), ("Mono", "defect"), ("Poly", "normal"), ("Poly", "defect")]
+    for ax, (cell_type, label) in zip(axes, panels):
+        ax.imshow(imread(TEST_DIR / label / SAMPLES[(cell_type, label)]), cmap="gray")
+        ax.set_xticks([])
+        ax.set_yticks([])
+        ax.set_title(f"{cell_type} {label}", fontsize=7, pad=2)
 
-    fig.tight_layout(pad=0.3)
+    fig.tight_layout(pad=0.2, w_pad=0.3)
     fig.savefig(RESULT_DIR / "fig_samples.pdf")
     fig.savefig(RESULT_DIR / "fig_samples.png", dpi=300)
 
