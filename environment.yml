@@ -1,0 +1,11 @@
+name: pa04
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      - tensorflow==2.15.0
+      - numpy==1.26.4
+      - opencv-python==4.10.0.84
+      - matplotlib==3.8.4
